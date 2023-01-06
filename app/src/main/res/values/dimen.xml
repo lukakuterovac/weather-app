@@ -3,4 +3,5 @@
     <dimen name="favorite_button_size">32dp</dimen>
     <dimen name="weather_card_height">70dp</dimen>
     <dimen name="weather_card_icon_size">70dp</dimen>
+    <dimen name="weather_details_icon_size">50dp</dimen>
 </resources>
