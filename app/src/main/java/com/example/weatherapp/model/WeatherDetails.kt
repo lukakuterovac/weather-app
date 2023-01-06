@@ -5,6 +5,7 @@ data class WeatherDetails(
     val temperature: Double,
     val feelsLikeTemperature: Double,
     val pressure: Double,
+    val humidity: Double,
     val weather: String,
     val weatherDescription: String,
     val weatherIconId: String?

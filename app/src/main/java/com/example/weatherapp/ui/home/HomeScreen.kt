@@ -11,7 +11,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import com.example.weatherapp.R
 import com.example.weatherapp.mock.WeatherMock
 import com.example.weatherapp.ui.component.WeatherCard
@@ -19,6 +21,7 @@ import com.example.weatherapp.ui.component.WeatherViewState
 import com.example.weatherapp.ui.home.mapper.HomeScreenMapper
 import com.example.weatherapp.ui.home.mapper.HomeScreenMapperImpl
 import com.example.weatherapp.ui.theme.WeatherAppTheme
+import com.example.weatherapp.ui.theme.poppins
 import com.example.weatherapp.ui.theme.spacing
 
 val homeScreenMapper: HomeScreenMapper = HomeScreenMapperImpl()
@@ -39,16 +42,19 @@ fun HomeScreen(
     Column(modifier = modifier) {
         Text(
             text = stringResource(id = R.string.forecasts),
-            style = MaterialTheme.typography.h1,
+            fontSize = 20.sp,
+            fontFamily = poppins,
+            fontWeight = FontWeight.Medium,
             modifier = Modifier.padding(MaterialTheme.spacing.medium)
         )
         LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
             contentPadding = PaddingValues(
-                start = MaterialTheme.spacing.medium,
-                end = MaterialTheme.spacing.medium
+                horizontal = MaterialTheme.spacing.medium,
+                vertical = MaterialTheme.spacing.small
             ),
+            modifier = Modifier.fillMaxHeight(),
             userScrollEnabled = true
         ) {
             items(

@@ -36,8 +36,9 @@ object WeatherMock {
         temperature = 10.0,
         feelsLikeTemperature = 10.0,
         pressure = 1000.0,
+        humidity = 65.0,
         weather = "Cloudy",
-        weatherDescription = "",
+        weatherDescription = "Scattered clouds",
         weatherIconId = "10d"
     )
 }
