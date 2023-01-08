@@ -49,7 +49,6 @@ fun WeatherCard(
             Text(
                 text = weatherCardViewState.city,
                 fontSize = 20.sp,
-                fontFamily = poppins,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.padding(MaterialTheme.spacing.small)
             )
@@ -68,13 +67,11 @@ private fun WeatherInfo(weatherCardViewState: WeatherViewState) {
         Text(
             text = String.format("%.0f", weatherCardViewState.temperature) + "°C",
             fontSize = 16.sp,
-            fontFamily = poppins,
             fontWeight = FontWeight.Normal
         )
         Text(
             text = weatherCardViewState.weather.uppercase(),
             fontSize = 10.sp,
-            fontFamily = poppins,
             fontWeight = FontWeight.Normal,
             color = Color.Gray
         )

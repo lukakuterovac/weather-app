@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.weatherapp.R
 import com.example.weatherapp.mock.WeatherMock
+import com.example.weatherapp.ui.component.FavoriteButton
 import com.example.weatherapp.ui.theme.WeatherAppTheme
-import com.example.weatherapp.ui.theme.poppins
 import com.example.weatherapp.ui.theme.spacing
 import com.example.weatherapp.ui.weatherDetails.mapper.WeatherDetailsScreenMapper
 import com.example.weatherapp.ui.weatherDetails.mapper.WeatherDetailsScreenMapperImpl
@@ -64,20 +64,17 @@ private fun WeatherDetailsHeader(viewState: WeatherDetailsScreenViewState) {
             Text(
                 text = viewState.city,
                 fontSize = 24.sp,
-                fontFamily = poppins,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.padding()
             )
             Text(
                 text = String.format("%.0f", viewState.temperature) + "°",
                 fontSize = 70.sp,
-                fontFamily = poppins,
                 fontWeight = FontWeight.Medium
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = viewState.weather, fontSize = 16.sp, fontFamily = poppins)
+                Text(text = viewState.weather, fontSize = 16.sp)
                 AsyncImage(
                     model = WEATHER_ICON_BASE_URL + viewState.weatherIconId + WEATHER_ICON_EXTENSION,
                     contentDescription = viewState.weather,
@@ -101,6 +98,14 @@ private fun WeatherDetails(viewState: WeatherDetailsScreenViewState) {
         shape = RoundedCornerShape(12.dp),
     ) {
         Column {
+            Spacer(modifier = Modifier.weight(1F))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(text = "Weather details", fontSize = 20.sp, modifier = Modifier.padding(MaterialTheme.spacing.small))
+                Spacer(modifier = Modifier.weight(1F))
+                FavoriteButton(isFavorite = true, onClick = { }, modifier = Modifier.padding(MaterialTheme.spacing.small))
+            }
+            Spacer(modifier = Modifier.weight(1F))
+            Divider()
             Spacer(modifier = Modifier.weight(1F))
             WeatherDetailsSection(
                 section = "Description",
@@ -136,9 +141,9 @@ private fun WeatherDetails(viewState: WeatherDetailsScreenViewState) {
 private fun WeatherDetailsSection(section: String, measurement: String) {
     val spacing = Modifier.padding(MaterialTheme.spacing.small)
     Row {
-        Text(text = section, fontSize = 16.sp, fontFamily = poppins, modifier = spacing)
+        Text(text = section, fontSize = 16.sp, modifier = spacing)
         Spacer(modifier = Modifier.weight(1F))
-        Text(text = measurement, fontSize = 16.sp, fontFamily = poppins, modifier = spacing)
+        Text(text = measurement, fontSize = 16.sp, modifier = spacing)
     }
 }
 
