@@ -34,6 +34,7 @@ private val weatherDetailsViewState =
 @Composable
 fun WeatherDetailsScreen(
     viewState: WeatherDetailsScreenViewState,
+    onFavoriteButtonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -43,7 +44,7 @@ fun WeatherDetailsScreen(
         Spacer(modifier = Modifier.weight(1F))
         WeatherDetailsHeader(viewState)
         Spacer(modifier = Modifier.weight(1F))
-        WeatherDetails(viewState)
+        WeatherDetails(viewState, onFavoriteButtonClick)
         Spacer(modifier = Modifier.weight(1F))
     }
 }
@@ -88,7 +89,10 @@ private fun WeatherDetailsHeader(viewState: WeatherDetailsScreenViewState) {
 }
 
 @Composable
-private fun WeatherDetails(viewState: WeatherDetailsScreenViewState) {
+private fun WeatherDetails(
+    viewState: WeatherDetailsScreenViewState,
+    onFavoriteButtonClick: () -> Unit
+) {
     Card(
         modifier = Modifier
             .height(300.dp)
@@ -100,9 +104,17 @@ private fun WeatherDetails(viewState: WeatherDetailsScreenViewState) {
         Column {
             Spacer(modifier = Modifier.weight(1F))
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "Weather details", fontSize = 20.sp, modifier = Modifier.padding(MaterialTheme.spacing.small))
+                Text(
+                    text = "Weather details",
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(MaterialTheme.spacing.small)
+                )
                 Spacer(modifier = Modifier.weight(1F))
-                FavoriteButton(isFavorite = true, onClick = { }, modifier = Modifier.padding(MaterialTheme.spacing.small))
+                FavoriteButton(
+                    isFavorite = viewState.isFavorite,
+                    onClick = onFavoriteButtonClick,
+                    modifier = Modifier.padding(MaterialTheme.spacing.small)
+                )
             }
             Spacer(modifier = Modifier.weight(1F))
             Divider()
@@ -151,6 +163,6 @@ private fun WeatherDetailsSection(section: String, measurement: String) {
 @Composable
 fun WeatherDetailsScreenPreview() {
     WeatherAppTheme {
-        WeatherDetailsScreen(viewState = weatherDetailsViewState)
+        WeatherDetailsScreen(viewState = weatherDetailsViewState, onFavoriteButtonClick = { })
     }
 }

@@ -8,5 +8,6 @@ data class WeatherDetails(
     val humidity: Double,
     val weather: String,
     val weatherDescription: String,
-    val weatherIconId: String?
+    val weatherIconId: String?,
+    val isFavorite: Boolean
 )

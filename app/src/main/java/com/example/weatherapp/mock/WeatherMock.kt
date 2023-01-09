@@ -39,6 +39,7 @@ object WeatherMock {
         humidity = 65.0,
         weather = "Cloudy",
         weatherDescription = "Scattered clouds",
-        weatherIconId = "10d"
+        weatherIconId = "10d",
+        isFavorite = true
     )
 }
