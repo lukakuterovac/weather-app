@@ -7,6 +7,9 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -29,12 +32,19 @@ private const val WEATHER_ICON_EXTENSION = "@2x.png"
 private val weatherDetailsScreenMapper: WeatherDetailsScreenMapper =
     WeatherDetailsScreenMapperImpl()
 private val weatherDetailsViewState =
-    weatherDetailsScreenMapper.toWeatherDetailsScreenViewState(WeatherMock.getWeather())
+    weatherDetailsScreenMapper.toWeatherDetailsScreenViewState(WeatherMock.getWeatherDetails())
+
+@Composable
+fun WeatherDetailsRoute() {
+    val weatherDetails by remember {
+        mutableStateOf(weatherDetailsViewState)
+    }
+    WeatherDetailsScreen(viewState = weatherDetails)
+}
 
 @Composable
 fun WeatherDetailsScreen(
     viewState: WeatherDetailsScreenViewState,
-    onFavoriteButtonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -44,7 +54,7 @@ fun WeatherDetailsScreen(
         Spacer(modifier = Modifier.weight(1F))
         WeatherDetailsHeader(viewState)
         Spacer(modifier = Modifier.weight(1F))
-        WeatherDetails(viewState, onFavoriteButtonClick)
+        WeatherDetails(viewState)
         Spacer(modifier = Modifier.weight(1F))
     }
 }
@@ -90,8 +100,7 @@ private fun WeatherDetailsHeader(viewState: WeatherDetailsScreenViewState) {
 
 @Composable
 private fun WeatherDetails(
-    viewState: WeatherDetailsScreenViewState,
-    onFavoriteButtonClick: () -> Unit
+    viewState: WeatherDetailsScreenViewState
 ) {
     Card(
         modifier = Modifier
@@ -112,7 +121,7 @@ private fun WeatherDetails(
                 Spacer(modifier = Modifier.weight(1F))
                 FavoriteButton(
                     isFavorite = viewState.isFavorite,
-                    onClick = onFavoriteButtonClick,
+                    onClick = { },
                     modifier = Modifier.padding(MaterialTheme.spacing.small)
                 )
             }
@@ -163,6 +172,6 @@ private fun WeatherDetailsSection(section: String, measurement: String) {
 @Composable
 fun WeatherDetailsScreenPreview() {
     WeatherAppTheme {
-        WeatherDetailsScreen(viewState = weatherDetailsViewState, onFavoriteButtonClick = { })
+        WeatherDetailsScreen(viewState = weatherDetailsViewState)
     }
 }

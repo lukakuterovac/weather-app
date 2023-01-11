@@ -16,10 +16,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.weatherapp.R
 import com.example.weatherapp.mock.WeatherMock
 import com.example.weatherapp.ui.theme.spacing
-import com.example.weatherapp.R
-import com.example.weatherapp.ui.theme.poppins
 
 private const val WEATHER_ICON_BASE_URL = "https://openweathermap.org/img/wn/"
 private const val WEATHER_ICON_EXTENSION = "@2x.png"
@@ -88,7 +87,7 @@ private fun WeatherInfo(weatherCardViewState: WeatherViewState) {
 @Preview(showBackground = true)
 @Composable
 private fun WeatherCardPreview() {
-    val weather = WeatherMock.getWeather()
+    val weather = WeatherMock.getWeatherDetails().weather
 
     WeatherCard(
         weatherCardViewState = WeatherViewState(

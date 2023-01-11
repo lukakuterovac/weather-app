@@ -38,13 +38,28 @@ val homeWeatherViewState = mutableStateOf(
 )
 
 @Composable
+fun HomeScreenRoute(
+    onWeatherCardClick: (String) -> Unit,
+    onSearchButtonClick: (String) -> Unit
+) {
+    val homeWeather by remember {
+        homeWeatherViewState
+    }
+    HomeScreen(
+        viewState = homeWeather,
+        onWeatherCardClick = onWeatherCardClick,
+        onSearchButtonClick = onSearchButtonClick
+    )
+}
+
+@Composable
 fun HomeScreen(
     viewState: HomeScreenViewState,
-    onWeatherCardClick: () -> Unit,
-    onSearchButtonClick: () -> Unit,
+    onWeatherCardClick: (String) -> Unit,
+    onSearchButtonClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.fillMaxSize()) {
         Text(
             text = stringResource(id = R.string.forecasts),
             fontSize = 20.sp,
@@ -58,35 +73,34 @@ fun HomeScreen(
                 horizontal = MaterialTheme.spacing.medium,
                 vertical = MaterialTheme.spacing.small
             ),
-            modifier = Modifier.fillMaxHeight(0.5F),
+            modifier = Modifier.weight(1F),
             userScrollEnabled = true
         ) {
             items(
                 items = viewState.weathers,
-                key = { weather -> weather.city }
+                key = { weather -> weather.weatherViewState.city }
             ) { weather ->
                 WeatherCard(
                     weatherCardViewState = WeatherViewState(
-                        city = weather.city,
-                        temperature = weather.temperature,
-                        weather = weather.weather,
-                        weatherIconId = weather.weatherIconId
+                        city = weather.weatherViewState.city,
+                        temperature = weather.weatherViewState.temperature,
+                        weather = weather.weatherViewState.weather,
+                        weatherIconId = weather.weatherViewState.weatherIconId
                     ),
-                    onClick = onWeatherCardClick,
+                    onClick = { onWeatherCardClick(weather.weatherViewState.city) },
                     modifier = Modifier
                         .height(dimensionResource(id = R.dimen.weather_card_height))
                         .fillMaxWidth()
                 )
             }
         }
-        Spacer(modifier = Modifier.weight(0.1F))
         SearchBar(onSearchButtonClick)
     }
 }
 
 @Composable
 private fun SearchBar(
-    onSearchButtonClick: () -> Unit
+    onSearchButtonClick: (String) -> Unit
 ) {
     var query by remember { mutableStateOf(TextFieldValue("")) }
     Surface(
@@ -123,7 +137,10 @@ private fun SearchBar(
                 singleLine = true
             )
             Spacer(modifier = Modifier.weight(1F))
-            Button(onClick = onSearchButtonClick, shape = RoundedCornerShape(25)) {
+            Button(
+                onClick = { onSearchButtonClick(query.toString()) },
+                shape = RoundedCornerShape(25)
+            ) {
                 Text(text = "Search")
             }
         }

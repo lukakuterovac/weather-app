@@ -6,14 +6,15 @@ import com.example.weatherapp.ui.weatherDetails.WeatherDetailsScreenViewState
 class WeatherDetailsScreenMapperImpl : WeatherDetailsScreenMapper {
     override fun toWeatherDetailsScreenViewState(weatherDetails: WeatherDetails): WeatherDetailsScreenViewState {
         return WeatherDetailsScreenViewState(
-            city = weatherDetails.city,
-            temperature = weatherDetails.temperature,
+            city = weatherDetails.weather.city,
+            temperature = weatherDetails.weather.temperature,
             feelsLikeTemperature = weatherDetails.feelsLikeTemperature,
             pressure = weatherDetails.pressure,
             humidity = weatherDetails.humidity,
-            weather = weatherDetails.weather,
+            weather = weatherDetails.weather.weather,
             weatherDescription = weatherDetails.weatherDescription,
-            weatherIconId = weatherDetails.weatherIconId
+            weatherIconId = weatherDetails.weather.weatherIconId,
+            isFavorite = weatherDetails.weather.isFavorite
         )
     }
 }
