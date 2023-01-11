@@ -1,11 +1,9 @@
 package com.example.weatherapp.model
 
 data class WeatherDetails(
-    val city: String,
-    val temperature: Double,
+    val weather: Weather,
     val feelsLikeTemperature: Double,
     val pressure: Double,
-    val weather: String,
+    val humidity: Double,
     val weatherDescription: String,
-    val weatherIconId: String?
 )

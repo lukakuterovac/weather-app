@@ -3,6 +3,7 @@ package com.example.weatherapp.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val Blue = Color(0xFF0b253f)
+val Primary = Color(0xFF3da9fc)
 
 val Gray100 = Color(0xFFfafafa)
 val Gray200 = Color(0xFFf5f5f5)

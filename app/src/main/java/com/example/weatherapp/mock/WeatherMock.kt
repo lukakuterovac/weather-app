@@ -1,54 +1,51 @@
 package com.example.weatherapp.mock
 
+import com.example.weatherapp.model.Weather
 import com.example.weatherapp.model.WeatherDetails
 
 object WeatherMock {
-    fun getWeatherList(): List<WeatherDetails> = listOf(
-        WeatherDetails(
+    fun getWeatherList(): List<Weather> = listOf(
+        Weather(
             city = "Osijek",
             temperature = 10.0,
-            feelsLikeTemperature = 10.0,
-            pressure = 1000.0,
             weather = "Cloudy",
-            weatherDescription = "",
-            weatherIconId = "10d"
+            weatherIconId = "10d",
+            isFavorite = true
         ),
-        WeatherDetails(
+        Weather(
             city = "Zagreb",
             temperature = 10.0,
-            feelsLikeTemperature = 10.0,
-            pressure = 1000.0,
             weather = "Cloudy",
-            weatherDescription = "",
-            weatherIconId = "10d"
+            weatherIconId = "10d",
+            isFavorite = true
         ),
-        WeatherDetails(
+        Weather(
             city = "Split",
             temperature = 10.0,
-            feelsLikeTemperature = 10.0,
-            pressure = 1000.0,
             weather = "Cloudy",
-            weatherDescription = "",
-            weatherIconId = "10d"
+            weatherIconId = "10d",
+            isFavorite = true
         ),
-        WeatherDetails(
+        Weather(
             city = "Rijeka",
             temperature = 10.0,
-            feelsLikeTemperature = 10.0,
-            pressure = 1000.0,
             weather = "Cloudy",
-            weatherDescription = "",
-            weatherIconId = "10d"
+            weatherIconId = "10d",
+            isFavorite = true
         )
     )
 
-    fun getWeather(): WeatherDetails = WeatherDetails(
-        city = "Osijek",
-        temperature = 10.0,
+    fun getWeatherDetails(): WeatherDetails = WeatherDetails(
+        weather = Weather(
+            city = "Osijek",
+            temperature = 10.0,
+            weather = "Cloudy",
+            weatherIconId = "10d",
+            isFavorite = true
+        ),
         feelsLikeTemperature = 10.0,
         pressure = 1000.0,
-        weather = "Cloudy",
-        weatherDescription = "",
-        weatherIconId = "10d"
+        humidity = 65.0,
+        weatherDescription = "Scattered clouds",
     )
 }
