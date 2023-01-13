@@ -26,6 +26,9 @@ import com.example.weatherapp.navigation.WeatherDetailsDestination
 import com.example.weatherapp.ui.home.HomeScreenRoute
 import com.example.weatherapp.ui.theme.Primary
 import com.example.weatherapp.ui.weatherDetails.WeatherDetailsRoute
+import com.example.weatherapp.ui.weatherDetails.WeatherDetailsViewModel
+import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun MainScreen() {
@@ -54,6 +57,7 @@ fun MainScreen() {
             ) {
                 composable(NavigationItem.HomeDestination.route) {
                     HomeScreenRoute(
+                        homeScreenViewModel = getViewModel(),
                         onWeatherCardClick = { city ->
                             navController.navigate(
                                 WeatherDetailsDestination.createNavigationRoute(city)
@@ -71,7 +75,10 @@ fun MainScreen() {
                     route = WeatherDetailsDestination.route,
                     arguments = listOf(navArgument(WEATHER_ID_KEY) { type = NavType.StringType }),
                 ) {
-                    WeatherDetailsRoute()
+                    val city = it.arguments?.getString(WEATHER_ID_KEY)
+                    val weatherDetailsViewModel =
+                        getViewModel<WeatherDetailsViewModel>(parameters = { parametersOf(city) })
+                    WeatherDetailsRoute(weatherDetailsViewModel = weatherDetailsViewModel)
                 }
             }
         }

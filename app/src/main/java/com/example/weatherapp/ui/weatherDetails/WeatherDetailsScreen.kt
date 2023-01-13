@@ -7,9 +7,8 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -19,32 +18,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.weatherapp.R
-import com.example.weatherapp.mock.WeatherMock
 import com.example.weatherapp.ui.component.FavoriteButton
 import com.example.weatherapp.ui.theme.WeatherAppTheme
 import com.example.weatherapp.ui.theme.spacing
-import com.example.weatherapp.ui.weatherDetails.mapper.WeatherDetailsScreenMapper
-import com.example.weatherapp.ui.weatherDetails.mapper.WeatherDetailsScreenMapperImpl
+import org.koin.androidx.compose.getViewModel
 
 private const val WEATHER_ICON_BASE_URL = "https://openweathermap.org/img/wn/"
 private const val WEATHER_ICON_EXTENSION = "@2x.png"
 
-private val weatherDetailsScreenMapper: WeatherDetailsScreenMapper =
-    WeatherDetailsScreenMapperImpl()
-private val weatherDetailsViewState =
-    weatherDetailsScreenMapper.toWeatherDetailsScreenViewState(WeatherMock.getWeatherDetails())
-
 @Composable
-fun WeatherDetailsRoute() {
-    val weatherDetails by remember {
-        mutableStateOf(weatherDetailsViewState)
-    }
-    WeatherDetailsScreen(viewState = weatherDetails)
+fun WeatherDetailsRoute(weatherDetailsViewModel: WeatherDetailsViewModel) {
+    val viewState: WeatherDetailsScreenViewState by weatherDetailsViewModel.weatherDetailsViewState.collectAsState()
+    WeatherDetailsScreen(viewState, weatherDetailsViewModel::toggleFavorite)
 }
 
 @Composable
 fun WeatherDetailsScreen(
     viewState: WeatherDetailsScreenViewState,
+    onFavoriteButtonClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -54,7 +45,7 @@ fun WeatherDetailsScreen(
         Spacer(modifier = Modifier.weight(1F))
         WeatherDetailsHeader(viewState)
         Spacer(modifier = Modifier.weight(1F))
-        WeatherDetails(viewState)
+        WeatherDetails(viewState, onFavoriteButtonClick)
         Spacer(modifier = Modifier.weight(1F))
     }
 }
@@ -100,7 +91,8 @@ private fun WeatherDetailsHeader(viewState: WeatherDetailsScreenViewState) {
 
 @Composable
 private fun WeatherDetails(
-    viewState: WeatherDetailsScreenViewState
+    viewState: WeatherDetailsScreenViewState,
+    onFavoriteButtonClick: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -121,7 +113,7 @@ private fun WeatherDetails(
                 Spacer(modifier = Modifier.weight(1F))
                 FavoriteButton(
                     isFavorite = viewState.isFavorite,
-                    onClick = { },
+                    onClick = { onFavoriteButtonClick(viewState.city) },
                     modifier = Modifier.padding(MaterialTheme.spacing.small)
                 )
             }
@@ -172,6 +164,6 @@ private fun WeatherDetailsSection(section: String, measurement: String) {
 @Composable
 fun WeatherDetailsScreenPreview() {
     WeatherAppTheme {
-        WeatherDetailsScreen(viewState = weatherDetailsViewState)
+        WeatherDetailsScreen(viewState = getViewModel(), {})
     }
 }

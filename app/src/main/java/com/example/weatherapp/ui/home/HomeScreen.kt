@@ -20,33 +20,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weatherapp.R
-import com.example.weatherapp.mock.WeatherMock
 import com.example.weatherapp.ui.component.WeatherCard
 import com.example.weatherapp.ui.component.WeatherViewState
-import com.example.weatherapp.ui.home.mapper.HomeScreenMapper
-import com.example.weatherapp.ui.home.mapper.HomeScreenMapperImpl
 import com.example.weatherapp.ui.theme.WeatherAppTheme
 import com.example.weatherapp.ui.theme.spacing
-
-val homeScreenMapper: HomeScreenMapper = HomeScreenMapperImpl()
-val weathers = WeatherMock.getWeatherList()
-
-val homeWeatherViewState = mutableStateOf(
-    homeScreenMapper.toHomeScreenViewState(
-        weathers
-    )
-)
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun HomeScreenRoute(
+    homeScreenViewModel: HomeScreenViewModel,
     onWeatherCardClick: (String) -> Unit,
     onSearchButtonClick: (String) -> Unit
 ) {
-    val homeWeather by remember {
-        homeWeatherViewState
-    }
+    val viewState: HomeScreenViewState by homeScreenViewModel.weatherViewState.collectAsState()
     HomeScreen(
-        viewState = homeWeather,
+        viewState = viewState,
         onWeatherCardClick = onWeatherCardClick,
         onSearchButtonClick = onSearchButtonClick
     )
@@ -138,7 +126,7 @@ private fun SearchBar(
             )
             Spacer(modifier = Modifier.weight(1F))
             Button(
-                onClick = { onSearchButtonClick(query.toString()) },
+                onClick = { onSearchButtonClick(query.text) },
                 shape = RoundedCornerShape(25)
             ) {
                 Text(text = "Search")
@@ -151,8 +139,9 @@ private fun SearchBar(
 @Composable
 fun HomeScreenPreview() {
     WeatherAppTheme {
+        val viewModel: HomeScreenViewModel = getViewModel()
         HomeScreen(
-            viewState = homeWeatherViewState.value,
+            viewState = viewModel.weatherViewState.collectAsState().value,
             onWeatherCardClick = { },
             onSearchButtonClick = { }
         )
