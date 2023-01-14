@@ -36,7 +36,8 @@ fun HomeScreenRoute(
     HomeScreen(
         viewState = viewState,
         onWeatherCardClick = onWeatherCardClick,
-        onSearchButtonClick = onSearchButtonClick
+        onSearchButtonClick = onSearchButtonClick,
+        onFavoriteButtonClick = homeScreenViewModel::toggleFavorite
     )
 }
 
@@ -45,6 +46,7 @@ fun HomeScreen(
     viewState: HomeScreenViewState,
     onWeatherCardClick: (String) -> Unit,
     onSearchButtonClick: (String) -> Unit,
+    onFavoriteButtonClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.fillMaxSize()) {
@@ -76,6 +78,7 @@ fun HomeScreen(
                         weatherIconId = weather.weatherViewState.weatherIconId
                     ),
                     onClick = { onWeatherCardClick(weather.weatherViewState.city) },
+                    onFavoriteButtonClick = { onFavoriteButtonClick(weather.weatherViewState.city) },
                     modifier = Modifier
                         .height(dimensionResource(id = R.dimen.weather_card_height))
                         .fillMaxWidth()
@@ -144,7 +147,8 @@ fun HomeScreenPreview() {
         HomeScreen(
             viewState = viewModel.weatherViewState.collectAsState().value,
             onWeatherCardClick = { },
-            onSearchButtonClick = { }
+            onSearchButtonClick = { },
+            onFavoriteButtonClick = { }
         )
     }
 }

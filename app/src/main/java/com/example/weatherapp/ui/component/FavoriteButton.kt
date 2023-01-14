@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.weatherapp.R
 import com.example.weatherapp.ui.theme.spacing
 
-private const val OPACITY_FACTOR = 0.5F
+const val OPACITY_FACTOR = 0.5F
 
 @Composable
 fun FavoriteButton(

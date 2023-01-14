@@ -34,6 +34,7 @@ data class WeatherViewState(
 fun WeatherCard(
     weatherCardViewState: WeatherViewState,
     onClick: () -> Unit,
+    onFavoriteButtonClick: () -> Unit,
     modifier: Modifier
 ) {
     Card(
@@ -45,12 +46,18 @@ fun WeatherCard(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = weatherCardViewState.city,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Medium,
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(MaterialTheme.spacing.small)
-            )
+            ) {
+                FavoriteButton(isFavorite = true, onClick = { onFavoriteButtonClick() })
+                Text(
+                    text = weatherCardViewState.city,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(MaterialTheme.spacing.small)
+                )
+            }
             Spacer(modifier = Modifier.weight(1F))
             WeatherInfo(weatherCardViewState = weatherCardViewState)
         }
@@ -97,6 +104,7 @@ private fun WeatherCardPreview() {
             weatherIconId = weather.weatherIconId
         ),
         onClick = { },
+        onFavoriteButtonClick = { },
         modifier = Modifier
             .size(width = 250.dp, height = 70.dp)
     )

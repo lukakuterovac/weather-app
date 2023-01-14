@@ -12,7 +12,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -122,7 +124,7 @@ private fun WeatherDetails(
             Spacer(modifier = Modifier.weight(1F))
             WeatherDetailsSection(
                 section = "Description",
-                measurement = viewState.weatherDescription
+                measurement = viewState.weatherDescription.capitalize(Locale.current)
             )
             Spacer(modifier = Modifier.weight(1F))
             Divider()
