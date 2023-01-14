@@ -127,7 +127,8 @@ private fun SearchBar(
             Spacer(modifier = Modifier.weight(1F))
             Button(
                 onClick = { onSearchButtonClick(query.text) },
-                shape = RoundedCornerShape(25)
+                shape = RoundedCornerShape(25),
+                enabled = query.text.isNotBlank()
             ) {
                 Text(text = "Search")
             }
