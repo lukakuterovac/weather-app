@@ -10,5 +10,9 @@ private const val API_KEY = "29b6ef2bd647b8aea60c93d4358e3fe9"
 
 class WeatherServiceImpl(private val client: HttpClient) : WeatherService {
     override suspend fun fetchWeatherDetails(city: String): WeatherResponse =
-        client.get(BASE_URL + "?q=" + city + "&appid=" + API_KEY + "&units=metric").body()
+        client.get("$BASE_URL?q=$city&appid=$API_KEY&units=metric").body()
+
+    override suspend fun fetchWeatherDetails(coordinates: Pair<Double, Double>): WeatherResponse =
+        client.get("$BASE_URL?lat=${coordinates.first}&lon=${coordinates.second}&appid=$API_KEY&units=metric")
+            .body()
 }
