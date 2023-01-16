@@ -11,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
@@ -59,6 +60,7 @@ private fun WeatherDetailsHeader(viewState: WeatherDetailsScreenViewState) {
             .height(250.dp)
             .width(250.dp),
         elevation = 10.dp,
+        backgroundColor = Color.White,
         shape = RoundedCornerShape(12.dp),
     ) {
         Column(
@@ -102,6 +104,7 @@ private fun WeatherDetails(
             .width(300.dp)
             .padding(top = 50.dp),
         elevation = 10.dp,
+        backgroundColor = Color.White,
         shape = RoundedCornerShape(12.dp),
     ) {
         Column {

@@ -63,26 +63,32 @@ fun HomeScreen(
                 horizontal = MaterialTheme.spacing.medium,
                 vertical = MaterialTheme.spacing.small
             ),
-            modifier = Modifier.weight(1F),
+            modifier = Modifier.weight(1F).fillMaxWidth(),
             userScrollEnabled = true
         ) {
-            items(
-                items = viewState.weathers,
-                key = { weather -> weather.weatherViewState.city }
-            ) { weather ->
-                WeatherCard(
-                    weatherCardViewState = WeatherViewState(
-                        city = weather.weatherViewState.city,
-                        temperature = weather.weatherViewState.temperature,
-                        weather = weather.weatherViewState.weather,
-                        weatherIconId = weather.weatherViewState.weatherIconId
-                    ),
-                    onClick = { onWeatherCardClick(weather.weatherViewState.city) },
-                    onFavoriteButtonClick = { onFavoriteButtonClick(weather.weatherViewState.city) },
-                    modifier = Modifier
-                        .height(dimensionResource(id = R.dimen.weather_card_height))
-                        .fillMaxWidth()
-                )
+            if (viewState.weathers.isEmpty()) {
+                item {
+                    Text(text = "No favorited cities.")
+                }
+            } else {
+                items(
+                    items = viewState.weathers,
+                    key = { weather -> weather.weatherViewState.city }
+                ) { weather ->
+                    WeatherCard(
+                        weatherCardViewState = WeatherViewState(
+                            city = weather.weatherViewState.city,
+                            temperature = weather.weatherViewState.temperature,
+                            weather = weather.weatherViewState.weather,
+                            weatherIconId = weather.weatherViewState.weatherIconId
+                        ),
+                        onClick = { onWeatherCardClick(weather.weatherViewState.city) },
+                        onFavoriteButtonClick = { onFavoriteButtonClick(weather.weatherViewState.city) },
+                        modifier = Modifier
+                            .height(dimensionResource(id = R.dimen.weather_card_height))
+                            .fillMaxWidth()
+                    )
+                }
             }
         }
         SearchBar(onSearchButtonClick)

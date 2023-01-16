@@ -1,6 +1,7 @@
 package com.example.weatherapp.ui.component
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -40,6 +41,7 @@ fun WeatherCard(
     Card(
         modifier = modifier.clickable { onClick() },
         shape = RoundedCornerShape(12.dp),
+        backgroundColor = Color.White,
         elevation = 10.dp
     ) {
         Row(
@@ -79,7 +81,6 @@ private fun WeatherInfo(weatherCardViewState: WeatherViewState) {
             text = weatherCardViewState.weather.uppercase(),
             fontSize = 10.sp,
             fontWeight = FontWeight.Normal,
-            color = Color.Gray
         )
     }
     AsyncImage(
